@@ -3,18 +3,14 @@ import asyncio
 from playwright.async_api import async_playwright, Playwright
 
 from dealogic_report_downloader.pages.login import LoginPage
-from dealogic_report_downloader.pages.reports import ReportsPage
-
 
 EMAIL = os.environ["EMAIL"]
 PASSWORD = os.environ["PASSWORD"]
-REPORTS = os.environ["REPORTS"]
 
 
 async def run(playwright: Playwright):
-    browser = await playwright.chromium.launch(headless=False)
-    context = await browser.new_context()
-    page = await context.new_page()
+    browser = await playwright.chromium.launch()
+    page = await browser.new_page()
 
     login_page = LoginPage(page)
 
@@ -22,15 +18,17 @@ async def run(playwright: Playwright):
     await login_page.provide_email(EMAIL)
     await login_page.provide_password(PASSWORD)
 
-    reports_page = ReportsPage(page)
+    access_token = await login_page.retrieve_access_token()
 
-    await reports_page.navigate()
-    await reports_page.select_reports(REPORTS)
+    print("access_token:\n")
+    print(access_token)
 
-    await browser.close()
+    await page.close()
 
 
 async def main():
+    print("Retrieving access_token for provided credentials ...\n")
+
     async with async_playwright() as playwright:
         await run(playwright)
 

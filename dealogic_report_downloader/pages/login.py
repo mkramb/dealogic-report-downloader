@@ -1,3 +1,5 @@
+import json
+
 from playwright.sync_api import Page
 
 
@@ -32,3 +34,12 @@ class LoginPage:
         await button_submit.click()
 
         await self.page.wait_for_load_state()
+
+    async def retrieve_access_token(self):
+        await self.page.wait_for_function("() => {{ return Object.keys(sessionStorage).find(row => row.startsWith('oidc.user')); }}")
+
+        user_data = await self.page.evaluate("() => sessionStorage[Object.keys(sessionStorage).find(row => row.startsWith('oidc.user'))]")
+        access_token = json.loads(user_data)['access_token']
+
+        return access_token
+
