@@ -18,7 +18,7 @@ playwright install
 
 ## Usage
 
-First step is retrieve `auth_token` for provided credentials:
+First step is to retrieve `access_token` for provided credentials:
 
 ```
 export EMAIL="test@test.com"
@@ -27,8 +27,8 @@ export PASSWORD="test"
 ./scripts/start.sh
 ```
 
-Using retrieved access_token we can make request for specific report data, \
-swagger doc for API are available at: https://api.reporting.cortex.dealogic.com/index.html
+Then we can make request for specific report data, swagger docs for API are available at: \
+https://api.reporting.cortex.dealogic.com/index.html
 
 ```
 export ACCESS_TOKEN="access-token"
