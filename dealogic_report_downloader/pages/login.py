@@ -1,17 +1,13 @@
 import json
-
 from playwright.sync_api import Page
 
 
-LOGIN_URL = "https://cortex.dealogic.com"
-
-
-class LoginPage:
+class DealogicLoginPage:
     def __init__(self, page: Page):
         self.page = page
 
     async def navigate(self):
-        await self.page.goto(LOGIN_URL)
+        await self.page.goto("https://cortex.dealogic.com")
         await self.page.wait_for_load_state()
 
     async def provide_email(self, email):

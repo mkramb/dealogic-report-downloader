@@ -2,7 +2,7 @@ import os
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
-from dealogic_report_downloader.pages.login import LoginPage
+from dealogic_report_downloader.pages.login import DealogicLoginPage
 
 EMAIL = os.environ["EMAIL"]
 PASSWORD = os.environ["PASSWORD"]
@@ -12,7 +12,7 @@ async def run(playwright: Playwright):
     browser = await playwright.chromium.launch()
     page = await browser.new_page()
 
-    login_page = LoginPage(page)
+    login_page = DealogicLoginPage(page)
 
     await login_page.navigate()
     await login_page.provide_email(EMAIL)
