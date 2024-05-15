@@ -32,8 +32,12 @@ class DealogicLoginPage:
         await self.page.wait_for_load_state()
 
     async def retrieve_access_token(self):
+        # we need to wait for sessionStorage to have user data, which is an async process
+        # and it eventually made available on the web client
         await self.page.wait_for_function("() => {{ return Object.keys(sessionStorage).find(row => row.startsWith('oidc.user')); }}")
 
+        # data in sessionStorage is coded as JSON, 
+        # this is unpacking user entry with access_token
         user_data = await self.page.evaluate("() => sessionStorage[Object.keys(sessionStorage).find(row => row.startsWith('oidc.user'))]")
         access_token = json.loads(user_data)['access_token']
 

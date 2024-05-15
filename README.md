@@ -13,6 +13,7 @@ poetry install
 Now download browser binaries and their dependencies:
 
 ```
+poetry shell
 playwright install
 ```
 
@@ -24,7 +25,7 @@ First step is to retrieve `access_token` for provided credentials:
 export EMAIL="test@test.com"
 export PASSWORD="test"
 
-./scripts/start.sh
+./scripts/get_auth_token.sh
 ```
 
 Then we can make request for specific report data, swagger docs for API are available at: \
